@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Create and export a custom-sized hexagon as a transparent PNG or a JPG."
+    />
+    <title>Hexagon Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="generator" aria-labelledby="page-title">
+        <header class="generator__header">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">Shape studio</p>
+            <h1 id="page-title">Hexagon Generator</h1>
+            <p class="intro">
+              Set the dimensions and color, then export a crisp, custom hexagon.
+            </p>
+          </div>
+        </header>
+
+        <div class="generator__workspace">
+          <form class="controls" id="hexagon-form" novalidate>
+            <fieldset>
+              <legend>Dimensions</legend>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="width">Width</label>
+                  <div class="input-with-unit">
+                    <input
+                      id="width"
+                      name="width"
+                      type="number"
+                      inputmode="numeric"
+                      min="16"
+                      max="4096"
+                      step="1"
+                      value="800"
+                      required
+                      aria-describedby="width-error"
+                    />
+                    <span>px</span>
+                  </div>
+                  <p class="field-error" id="width-error" aria-live="polite"></p>
+                </div>
+
+                <div class="field">
+                  <label for="height">Height</label>
+                  <div class="input-with-unit">
+                    <input
+                      id="height"
+                      name="height"
+                      type="number"
+                      inputmode="numeric"
+                      min="16"
+                      max="4096"
+                      step="1"
+                      value="700"
+                      required
+                      aria-describedby="height-error"
+                    />
+                    <span>px</span>
+                  </div>
+                  <p class="field-error" id="height-error" aria-live="polite"></p>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Fill color</legend>
+              <div class="field">
+                <label for="color">Hex code</label>
+                <div class="color-input">
+                  <span id="color-swatch" aria-hidden="true"></span>
+                  <input
+                    id="color"
+                    name="color"
+                    type="text"
+                    value="#7C5CFC"
+                    maxlength="7"
+                    spellcheck="false"
+                    autocomplete="off"
+                    required
+                    aria-describedby="color-error"
+                  />
+                </div>
+                <p class="field-error" id="color-error" aria-live="polite"></p>
+              </div>
+            </fieldset>
+
+            <div class="export-group">
+              <button class="button button--primary" type="button" id="export-png">
+                <span>Export PNG</span>
+                <span aria-hidden="true">↓</span>
+              </button>
+              <button class="button button--secondary" type="button" id="export-jpg">
+                <span>Export JPG</span>
+                <span aria-hidden="true">↓</span>
+              </button>
+            </div>
+
+            <p class="format-note">
+              PNG preserves transparency. JPG does not support transparent pixels,
+              so its empty corners export on white.
+            </p>
+          </form>
+
+          <section class="preview-panel" aria-labelledby="preview-title">
+            <div class="preview-toolbar">
+              <div>
+                <p class="preview-label" id="preview-title">Live preview</p>
+                <p class="preview-size" id="preview-size">800 × 700 px</p>
+              </div>
+              <span class="status-pill">
+                <span></span>
+                Transparent
+              </span>
+            </div>
+
+            <div class="canvas-stage" id="canvas-stage">
+              <canvas id="preview-canvas" aria-label="Generated hexagon preview">
+                Your browser does not support canvas.
+              </canvas>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
