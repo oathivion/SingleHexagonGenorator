@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Create and export a custom-sized hexagon as a transparent PNG or a JPG."
+      content="Create, preview, and export custom 2D and 3D polygons from 3 to 20 sides."
     />
-    <title>Hexagon Generator</title>
+    <title>Polygon Generator</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
@@ -15,23 +15,70 @@
     <main class="app-shell">
       <section class="generator" aria-labelledby="page-title">
         <header class="generator__header">
-          <div class="brand-mark" aria-hidden="true">
-            <span></span>
-          </div>
+          <div class="brand-mark" aria-hidden="true"><span></span></div>
           <div>
             <p class="eyebrow">Shape studio</p>
-            <h1 id="page-title">Hexagon Generator</h1>
+            <h1 id="page-title">Polygon Generator</h1>
             <p class="intro">
-              Set the dimensions and color, then export a crisp, custom hexagon.
+              Explore flat polygons and unique, dice-inspired 3D showcase forms.
             </p>
           </div>
         </header>
 
         <div class="generator__workspace">
-          <form class="controls" id="hexagon-form" novalidate>
+          <form class="controls" id="polygon-form" novalidate>
             <fieldset>
-              <legend>Dimensions</legend>
+              <legend>Render mode</legend>
+              <div class="mode-control">
+                <span id="mode-2d-label" class="mode-label is-active">2D</span>
+                <label class="mode-switch" for="mode-toggle">
+                  <input
+                    id="mode-toggle"
+                    name="mode"
+                    type="checkbox"
+                    role="switch"
+                    aria-labelledby="mode-2d-label mode-3d-label"
+                  />
+                  <span class="mode-switch__track" aria-hidden="true">
+                    <span class="mode-switch__thumb"></span>
+                  </span>
+                </label>
+                <span id="mode-3d-label" class="mode-label">3D</span>
+              </div>
+            </fieldset>
 
+            <fieldset>
+              <legend>Shape</legend>
+              <div class="field">
+                <label for="sides">Number of sides</label>
+                <div class="select-input">
+                  <select id="sides" name="sides">
+                    <option value="3">Triangle &middot; 3 sides</option>
+                    <option value="4">Square &middot; 4 sides</option>
+                    <option value="5">Pentagon &middot; 5 sides</option>
+                    <option value="6" selected>Hexagon &middot; 6 sides</option>
+                    <option value="7">Heptagon &middot; 7 sides</option>
+                    <option value="8">Octagon &middot; 8 sides</option>
+                    <option value="9">Nonagon &middot; 9 sides</option>
+                    <option value="10">Decagon &middot; 10 sides</option>
+                    <option value="11">Hendecagon &middot; 11 sides</option>
+                    <option value="12">Dodecagon &middot; 12 sides</option>
+                    <option value="13">Tridecagon &middot; 13 sides</option>
+                    <option value="14">Tetradecagon &middot; 14 sides</option>
+                    <option value="15">Pentadecagon &middot; 15 sides</option>
+                    <option value="16">Hexadecagon &middot; 16 sides</option>
+                    <option value="17">Heptadecagon &middot; 17 sides</option>
+                    <option value="18">Octadecagon &middot; 18 sides</option>
+                    <option value="19">Enneadecagon &middot; 19 sides</option>
+                    <option value="20">Icosagon &middot; 20 sides</option>
+                  </select>
+                  <span aria-hidden="true">&#8964;</span>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Export dimensions</legend>
               <div class="field-row">
                 <div class="field">
                   <label for="width">Width</label>
@@ -52,7 +99,6 @@
                   </div>
                   <p class="field-error" id="width-error" aria-live="polite"></p>
                 </div>
-
                 <div class="field">
                   <label for="height">Height</label>
                   <div class="input-with-unit">
@@ -99,15 +145,12 @@
 
             <div class="export-group">
               <button class="button button--primary" type="button" id="export-png">
-                <span>Export PNG</span>
-                <span aria-hidden="true">↓</span>
+                <span>Export PNG</span><span aria-hidden="true">&darr;</span>
               </button>
               <button class="button button--secondary" type="button" id="export-jpg">
-                <span>Export JPG</span>
-                <span aria-hidden="true">↓</span>
+                <span>Export JPG</span><span aria-hidden="true">&darr;</span>
               </button>
             </div>
-
             <p class="format-note">
               PNG preserves transparency. JPG does not support transparent pixels,
               so its empty corners export on white.
@@ -118,18 +161,31 @@
             <div class="preview-toolbar">
               <div>
                 <p class="preview-label" id="preview-title">Live preview</p>
-                <p class="preview-size" id="preview-size">800 × 700 px</p>
+                <p class="preview-size" id="preview-size">
+                  Hexagon &middot; 2D &middot; 800 &times; 700 px
+                </p>
               </div>
-              <span class="status-pill">
-                <span></span>
-                Transparent
-              </span>
+              <div class="preview-actions">
+                <button class="reset-view" id="reset-view" type="button" hidden>
+                  Reset view
+                </button>
+                <span class="status-pill">
+                  <span></span>
+                  Transparent
+                </span>
+              </div>
             </div>
-
             <div class="canvas-stage" id="canvas-stage">
-              <canvas id="preview-canvas" aria-label="Generated hexagon preview">
+              <canvas
+                id="preview-canvas"
+                aria-label="Generated polygon preview"
+                tabindex="0"
+              >
                 Your browser does not support canvas.
               </canvas>
+              <p class="viewer-hint" id="viewer-hint" hidden>
+                Dice-inspired showcase &middot; Drag to rotate
+              </p>
             </div>
           </section>
         </div>
